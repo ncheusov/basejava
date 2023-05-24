@@ -32,7 +32,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (storage.length < 10000) {
+        if (storage.length > 10000) {
             if ((!checkResume(resume.getUuid()))) {
                 storage[size] = resume;
                 size++;
