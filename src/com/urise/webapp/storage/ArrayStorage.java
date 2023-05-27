@@ -26,32 +26,36 @@ public class ArrayStorage {
 
     public void save(Resume resume) {
         if (size < END_RANGE) {
-//            if (getIndex(resume.getUuid()) > -1) {
+            if (getIndex(resume.getUuid()) < 0) {
                 storage[size] = resume;
                 size++;
-//            }
+            } else {
+                System.out.println("ERROR in method 'save': '" + resume.getUuid() + "' has already exists");
+            }
         } else {
             System.out.println("ERROR: storage overflowed");
         }
     }
 
     public Resume get(String uuid) {
-        return (getIndex(uuid) > -1) ? storage[getIndex(uuid)] : null;
+        if (getIndex(uuid) > -1) {
+            return storage[getIndex(uuid)];
+        }
+        System.out.println("ERROR in method 'get': '" + uuid + "' is not exists");
+        return null;
     }
 
     public void delete(String uuid) {
-//        if (getIndex(uuid)) {
-            int index = getIndex(uuid);
-            if (index > -1) {
-                for (int i = index; i < size - 1; i++) {
-                    storage[i] = storage[i - 1];
-                    storage[size - 1] = null;
-                    size--;
-                }
+        int index = getIndex(uuid);
+        if (index > -1) {
+            for (int i = index; i < size - 1; i++) {
+                storage[i] = storage[size - 1];
+                storage[size - 1] = null;
+                size--;
             }
-//        } else {
-//            System.out.println(existsOrNot(uuid));
-//        }
+        } else {
+            System.out.println("ERROR in method 'delete': '" + uuid + "' is not exists");
+        }
     }
 
     /**
@@ -67,17 +71,12 @@ public class ArrayStorage {
 
     private int getIndex(String uuid) {
         for (int i = 0; i <= size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                return i;
+            if (storage[i] != null) {
+                if (uuid.equals(storage[i].getUuid())) {
+                    return i;
+                }
             }
         }
-        System.out.println(existsOrNot(uuid));
         return -1;
-    }
-
-    private String existsOrNot(String uuid) {
-        return (getIndex(uuid) > -1)
-                ? "'" + uuid + "' has already exists"
-                : "ERROR: '" + uuid + "' is not exists";
     }
 }
