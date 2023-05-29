@@ -54,6 +54,7 @@ public class ArrayStorage {
         int index = getIndex(uuid);
         if (index > -1) {
             storage[index] = storage[size - 1];
+            size--;
         } else {
             System.out.println("ERROR in method 'delete': '" + uuid + "' is not exists");
         }
