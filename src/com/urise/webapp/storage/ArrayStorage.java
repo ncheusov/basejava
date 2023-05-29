@@ -11,8 +11,8 @@ import java.util.Arrays;
 
 public class ArrayStorage {
 
-    private static final int END_RANGE = 10000;
-    private final Resume[] storage = new Resume[10000];
+    private static final int STORAGE_LIMIT = 10000;
+    private final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size;
 
     public void clear() {
@@ -21,19 +21,24 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        storage[getIndex(resume.getUuid())].setUuid("update");
+        int index = getIndex(resume.getUuid());
+        boolean isExists = index > -1;
+        if (isExists) {
+            storage[index] = resume;
+        } else {
+            System.out.println("ERROR in method 'update': '" + resume.getUuid() + "' is not exists");
+        }
     }
 
     public void save(Resume resume) {
-        if (size < END_RANGE) {
-            if (getIndex(resume.getUuid()) < 0) {
-                storage[size] = resume;
-                size++;
-            } else {
-                System.out.println("ERROR in method 'save': '" + resume.getUuid() + "' has already exists");
-            }
-        } else {
+        boolean isExists = (getIndex(resume.getUuid()) > -1);
+        if (size > STORAGE_LIMIT) {
             System.out.println("ERROR: storage overflowed");
+        } else if (isExists) {
+            System.out.println("ERROR in method 'save': '" + resume.getUuid() + "' has already exists");
+        } else {
+            storage[size] = resume;
+            size++;
         }
     }
 
@@ -48,11 +53,7 @@ public class ArrayStorage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index > -1) {
-            for (int i = index; i < size - 1; i++) {
-                storage[i] = storage[size - 1];
-                storage[size - 1] = null;
-                size--;
-            }
+            storage[index] = storage[size - 1];
         } else {
             System.out.println("ERROR in method 'delete': '" + uuid + "' is not exists");
         }
