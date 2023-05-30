@@ -22,8 +22,7 @@ public class ArrayStorage {
 
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
-        boolean isExists = index > -1;
-        if (isExists) {
+        if (index > -1) {
             storage[index] = resume;
         } else {
             System.out.println("ERROR in method 'update': '" + resume.getUuid() + "' is not exists");
@@ -31,10 +30,9 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        boolean isExists = (getIndex(resume.getUuid()) > -1);
         if (size > STORAGE_LIMIT) {
             System.out.println("ERROR: storage overflowed");
-        } else if (isExists) {
+        } else if (getIndex(resume.getUuid()) > -1) {
             System.out.println("ERROR in method 'save': '" + resume.getUuid() + "' has already exists");
         } else {
             storage[size] = resume;
@@ -43,8 +41,9 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        if (getIndex(uuid) > -1) {
-            return storage[getIndex(uuid)];
+        int index = getIndex(uuid);
+        if (index > -1) {
+            return storage[index];
         }
         System.out.println("ERROR in method 'get': '" + uuid + "' is not exists");
         return null;
