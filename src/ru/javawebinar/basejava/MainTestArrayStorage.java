@@ -5,7 +5,7 @@ import ru.javawebinar.basejava.storage.ArrayStorage;
 import ru.javawebinar.basejava.storage.Storage;
 
 /**
- * Test for com.urise.webapp.storage.ArrayStorage implementation
+ * Test for ru.javawebinar.basejava.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
 

@@ -25,7 +25,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (size > STORAGE_LIMIT) {
+        if (size >= STORAGE_LIMIT) {
             System.out.println("ERROR: storage overflowed");
         } else if (getIndex(resume.getUuid()) > -1) {
             System.out.println("ERROR in method 'save': '" + resume.getUuid() + "' has already exists");
