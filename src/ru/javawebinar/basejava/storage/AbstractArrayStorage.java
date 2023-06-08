@@ -23,7 +23,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void save(Resume resume) {
+    public final void save(Resume resume) {
         if (size >= STORAGE_LIMIT) {
             System.out.println("ERROR: storage overflowed");
         } else if (getIndex(resume.getUuid()) > -1) {
@@ -34,7 +34,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void delete(String uuid) {
+    public final void delete(String uuid) {
         int index = getIndex(uuid);
         if (index > -1) {
             removeResume(index);
