@@ -8,18 +8,20 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected int getIndex(String uuid) {
-        binaryInsertingSort();
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }
 
-    private void binaryInsertingSort() {
-        for (int i = 0; i < size; i++) {
-            Resume searchKey = storage[i];
-            int locationIndex = Math.abs(Arrays.binarySearch(storage, 0, i, searchKey) + 1);
-            System.arraycopy(storage, locationIndex, storage, locationIndex + 1, i - locationIndex);
-            storage[locationIndex] = searchKey;
-        }
+    @Override
+    protected void insertResume(Resume resume) {
+        int location = Math.abs(Arrays.binarySearch(storage, 0, size, resume) + 1);
+        System.arraycopy(storage, location, storage, location + 1, size);
+        storage[location] = resume;
+    }
+
+    @Override
+    protected void removeResume(int index) {
+
     }
 }
