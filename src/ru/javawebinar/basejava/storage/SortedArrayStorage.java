@@ -15,9 +15,9 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void insertResume(Resume resume) {
-        int location = Math.abs(Arrays.binarySearch(storage, 0, size, resume) + 1);
-        System.arraycopy(storage, location, storage, location + 1, size);
-        storage[location] = resume;
+        int insertIdx = Math.abs(Arrays.binarySearch(storage, 0, size, resume) + 1);
+        System.arraycopy(storage, insertIdx, storage, insertIdx + 1, size);
+        storage[insertIdx] = resume;
     }
 
     @Override
