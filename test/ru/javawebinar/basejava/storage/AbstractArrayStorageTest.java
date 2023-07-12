@@ -1,20 +1,25 @@
 package ru.javawebinar.basejava.storage;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 
-public class AbstractArrayStorageTest {
+import static org.junit.Assert.*;
+
+public abstract class AbstractArrayStorageTest {
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
-    private final Storage storage = new ArrayStorage();
+    private final Storage storage;
+
+    public AbstractArrayStorageTest(Storage storage) {
+        this.storage = storage;
+    }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         storage.clear();
         storage.save(new Resume(UUID_1));
         storage.save(new Resume(UUID_2));
@@ -22,12 +27,13 @@ public class AbstractArrayStorageTest {
     }
 
     @Test
-    public void size() throws Exception {
-        Assert.assertEquals(3, storage.size());
+    public void size() {
+        assertEquals(3, storage.size());
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void update() {
+
     }
 
     @Test
