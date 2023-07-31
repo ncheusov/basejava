@@ -2,6 +2,7 @@ package ru.javawebinar.basejava.storage;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
@@ -28,7 +29,6 @@ public abstract class AbstractArrayStorageTest {
         storage.save(RESUME_1);
         storage.save(RESUME_2);
         storage.save(RESUME_3);
-
     }
 
     @Test
@@ -44,18 +44,26 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void save() {
-
+        storage.clear();
+        storage.save(RESUME_1);
+        assertEquals(RESUME_1, storage.get(UUID_1));
     }
 
-    @Test(expected = NotExistStorageException.class)
+    @Test
     public void delete() {
+        int actual = storage.size();
         storage.delete(UUID_1);
-        assertNull(storage.get(UUID_1));
+        assertEquals(2, actual);
+        assertNotEquals(RESUME_1, RESUME_2);
+        assertNotEquals(RESUME_1, RESUME_3);
     }
 
     @Test
     public void clear() {
         storage.clear();
+        Resume[] expected = new Resume[0];
+        Resume[] actual = storage.getAll();
+        assertArrayEquals(expected, actual);
         assertEquals(0, storage.size());
     }
 
@@ -65,7 +73,6 @@ public abstract class AbstractArrayStorageTest {
         Resume[] actual = storage.getAll();
         assertArrayEquals(expected, actual);
         assertEquals(3, storage.size());
-        assertNotNull(actual);
     }
 
     @Test
@@ -73,13 +80,18 @@ public abstract class AbstractArrayStorageTest {
         assertEquals(storage.get(UUID_1), RESUME_1);
         assertEquals(storage.get(UUID_2), RESUME_2);
         assertEquals(storage.get(UUID_3), RESUME_3);
-        assertNotNull(storage.get(UUID_1));
-        assertNotNull(storage.get(UUID_2));
-        assertNotNull(storage.get(UUID_3));
     }
 
     @Test (expected = NotExistStorageException.class)
     public void getNotExist() {
         storage.get(NOT_EXIST_RESUME);
+    }
+
+    @Test (expected = ExistStorageException.class)
+    public void saveExist() {
+        Resume[] resumesArray = new Resume[] {RESUME_1, RESUME_2, RESUME_3};
+        for (Resume resume : resumesArray) {
+            storage.save(resume);
+        }
     }
 }
