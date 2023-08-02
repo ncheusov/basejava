@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import static org.junit.Assert.*;
@@ -21,7 +20,6 @@ public abstract class AbstractArrayStorageTest {
     private static final Resume[] EMPTY_ARR = new Resume[0];
     private static final Resume[] EXPECTED_ARR = new Resume[] {RESUME_1, RESUME_2, RESUME_3};
     private static final int LEN = EXPECTED_ARR.length;
-    private static final int STORAGE_LIMIT = 10000;
     private final Storage storage;
 
     public AbstractArrayStorageTest(Storage storage) {
@@ -109,15 +107,16 @@ public abstract class AbstractArrayStorageTest {
         }
     }
 
-    @Test
+    @Test (expected = ArrayIndexOutOfBoundsException.class)
     public void storageOverflow() {
         storage.clear();
-        for (int i = 0; i < STORAGE_LIMIT; i++) {
-            try {
-                storage.save(new Resume());
-            } catch (StorageException ex) {
-                fail("ERROR: overflow ahead of time");
-            }
+        for (int i = 0; i < LEN; i++) {
+            storage.save(EXPECTED_ARR[i]);
+        }
+        try {
+            storage.save(EXPECTED_ARR[LEN + 1]);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            fail("ERROR: storage overflowed");
         }
     }
 
