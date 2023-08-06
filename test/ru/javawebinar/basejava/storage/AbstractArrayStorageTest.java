@@ -24,7 +24,7 @@ public abstract class AbstractArrayStorageTest {
     private static final int EXPECTED_LEN = 3;
     private final Storage storage;
 
-    public AbstractArrayStorageTest(Storage storage) {
+    protected AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
 
