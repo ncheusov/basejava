@@ -17,11 +17,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
-    public int size() {
+    @Override
+    protected int getSize() {
         return size;
     }
 
-    public final void update(Resume resume) {
+    @Override
+    protected final  void updateResume(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index > -1) {
             storage[index] = resume;
@@ -30,7 +32,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         }
     }
 
-    public final void save(Resume resume) {
+    @Override
+    protected final void saveResume(Resume resume) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("ERROR: storage overflowed", resume.getUuid());
         } else if (getIndex(resume.getUuid()) > -1) {
@@ -41,7 +44,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         }
     }
 
-    public final void delete(String uuid) {
+    @Override
+    protected final void deleteResume(String uuid) {
         int index = getIndex(uuid);
         if (index > -1) {
             removeResume(index);
@@ -50,7 +54,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
             throw new NotExistStorageException(uuid);
         }
     }
-    public void clear() {
+
+    @Override
+    protected void clearStorage() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
@@ -59,11 +65,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
      * @return array, contains only Resumes in storage (without null)
      */
 
-    public Resume[] getAll() {
+    @Override
+    protected Resume[] getAllResumes() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    public final Resume get(String uuid) {
+    @Override
+    protected final Resume getElement(String uuid) {
         int index = getIndex(uuid);
         if (index > -1) {
             return storage[index];

@@ -1,61 +1,48 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
-
-import java.util.Arrays;
 
 public abstract class AbstractStorage implements Storage {
 
-    public int size() {
-        return size;
+    public final int size() {
+        return getSize();
     }
 
     public final void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index > -1) {
-            storage[index] = resume;
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+        updateResume(resume);
     }
 
     public final void save(Resume resume) {
-        if (size >= STORAGE_LIMIT) {
-            throw new StorageException("ERROR: storage overflowed", resume.getUuid());
-        } else if (getIndex(resume.getUuid()) > -1) {
-            throw new ExistStorageException(resume.getUuid());
-        } else {
-            insertResume(resume);
-            size++;
-        }
+        saveResume(resume);
     }
 
     public final void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            removeResume(index);
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
+        deleteResume(uuid);
     }
 
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+    public final void clear() {
+        clearStorage();
+    }
+
+    public final Resume[] getAll() {
+        return getAllResumes();
     }
 
     public final Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            return storage[index];
-        }
-        throw new NotExistStorageException(uuid);
+        return getElement(uuid);
     }
+
+    protected abstract int getSize();
+
+    protected abstract void updateResume(Resume resume);
+
+    protected abstract void saveResume(Resume resume);
+
+    protected abstract void deleteResume(String uuid);
+
+    protected abstract void clearStorage();
+
+    protected abstract Resume[] getAllResumes();
+
+    protected abstract Resume getElement(String uuid);
 }
