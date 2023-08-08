@@ -4,7 +4,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    public final int size() {
+    public int size() {
         return getSize();
     }
 
