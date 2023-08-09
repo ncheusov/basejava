@@ -2,8 +2,6 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.exception.StorageException;
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 
 import java.util.Arrays;
 
@@ -24,20 +22,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected final void updateResume(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index > -1) {
-            storage[index] = resume;
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+        storage[getIndex(resume.getUuid())] = resume;
     }
 
     @Override
     protected final void saveResume(Resume resume) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("ERROR: storage overflowed", resume.getUuid());
-        } else if (getIndex(resume.getUuid()) > -1) {
-            throw new ExistStorageException(resume.getUuid());
         } else {
             insertResume(resume);
             size++;
@@ -46,13 +37,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected final void deleteResume(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            removeResume(index);
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+        removeResume(getIndex(uuid));
+        size--;
     }
 
     @Override
@@ -72,13 +58,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected final Resume getElement(String uuid) {
-        int index = getIndex(uuid);
-        if (index > -1) {
-            return storage[index];
-        }
-        throw new NotExistStorageException(uuid);
+        return storage[getIndex(uuid)];
     }
 
+    @Override
     protected abstract int getIndex(String uuid);
 
     protected abstract void insertResume(Resume resume);
