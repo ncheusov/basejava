@@ -65,4 +65,8 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Resume[] getAllResumes();
 
     protected abstract Resume getElement(String uuid);
+
+//    private Resume getExistingSearchKey() {
+//
+//    }
 }
