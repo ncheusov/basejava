@@ -1,7 +1,7 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.exception.ExistStorageException;
+import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 
 public abstract class AbstractStorage implements Storage {
@@ -11,7 +11,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public final void update(Resume resume) {
-        if (getIndex(resume.getUuid()) > -1) {
+        if (isExist(resume)) {
             updateResume(resume);
         } else {
             throw new NotExistStorageException(resume.getUuid());
@@ -19,12 +19,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public final void save(Resume resume) {
-        String uuid = resume.getUuid();
-        if (getIndex(uuid) > -1) {
-            throw new ExistStorageException(uuid);
-        } else {
-            saveResume(resume);
-        }
+        saveResume(getExistingSearchKey(resume));
     }
 
     public final void delete(String uuid) {
@@ -52,6 +47,8 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract int getSize();
 
+    protected abstract boolean isExist(Resume resume);
+
     protected abstract int getIndex(String uuid);
 
     protected abstract void updateResume(Resume resume);
@@ -66,7 +63,11 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume getElement(String uuid);
 
-//    private Resume getExistingSearchKey() {
-//
-//    }
+    private Resume getExistingSearchKey(Resume resume) {
+        Object searchKey = resume;
+        if (isExist(searchKey)) {
+            throw new ExistStorageException(resume.getUuid());
+        }
+        return searchKey;
+    }
 }
