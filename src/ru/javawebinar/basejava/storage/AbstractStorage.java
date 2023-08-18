@@ -20,7 +20,8 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public final void save(Resume resume) {
-        saveResume(getExistingSearchKey(resume));
+        Object searchKey = getIndex(resume.getUuid());
+        saveResume(getExistingSearchKey(searchKey));
     }
 
     public final void delete(String uuid) {
@@ -67,8 +68,8 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Resume getElement(String uuid);
 
     private Object getExistingSearchKey(Object searchKey) {
-        if (isExist(searchKey)) {
-            throw new ExistStorageException((Resume) searchKey);
+        if (isExist((Resume) searchKey)) {
+            throw new ExistStorageException(((Resume) searchKey).getUuid());
         }
         return searchKey;
     }
