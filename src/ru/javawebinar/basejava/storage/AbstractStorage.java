@@ -26,12 +26,7 @@ public abstract class AbstractStorage implements Storage {
 
     public final void delete(String uuid) {
         Object searchKey = getIndex(uuid);
-        getExistingSearchKey(searchKey);
-        if () {
-            deleteResume(uuid);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+        deleteResume(getExistingSearchKey(searchKey));
     }
 
     public final void clear() {
@@ -51,7 +46,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract int getSize();
 
-    protected abstract boolean isExist(Resume resume);
+    protected abstract boolean isExist(String uuid);
 
     protected abstract int getIndex(String uuid);
 
@@ -67,9 +62,10 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume getElement(String uuid);
 
-    private Object getExistingSearchKey(Object searchKey) {
-        if (isExist((Resume) searchKey)) {
-            throw new ExistStorageException(((Resume) searchKey).getUuid());
+    private Object getExistingSearchKey(String uuid) {
+        Object searchKey = uuid;
+        if (isExist(searchKey)) {
+            throw new ExistStorageException(uuid);
         }
         return searchKey;
     }
