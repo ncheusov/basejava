@@ -22,13 +22,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected final void doUpdate(Object searchKey, Resume resume) {
-        storage[(int) getSearchKey(searchKey.getUuid())] = (Resume) searchKey;
+        storage[(int) getSearchKey(resume.getUuid())] = (Resume) searchKey;
     }
 
     @Override
-    protected final void doSave(Object searchKey, Resume resume) {
+    protected final void doSave(Object searchKey) {
+        Resume res = (Resume) searchKey;
         if (size >= STORAGE_LIMIT) {
-            throw new StorageException("ERROR: storage overflowed", resume.getUuid());
+            throw new StorageException("ERROR: storage overflowed", res.getUuid());
         } else {
             insertResume((Resume) searchKey);
             size++;

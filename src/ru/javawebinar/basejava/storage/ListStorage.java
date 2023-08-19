@@ -11,46 +11,61 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
-    private static final List<Resume> storage = new ArrayList<>();
+    private static final List<Resume> STORAGE = new ArrayList<>();
 
     @Override
     protected int getSize() {
-        return storage.size();
+        return STORAGE.size();
     }
 
     @Override
-    protected void doUpdate(Object searchKey) {
-        storage.add(getSearchKey(searchKey.getUuid()), searchKey);
+    protected boolean isExist(Object searchKey) {
+        return getSearchKey(searchKey) != null;
     }
 
     @Override
-    protected void doSave(Object searchKey, Resume resume) {
-        storage.add(searchKey);
+    protected void doUpdate(Object searchKey, Resume resume) {
+        STORAGE.add((Resume) searchKey);
+    }
+
+    @Override
+    protected void doSave(Object searchKey) {
+        Resume resume = (Resume) getSearchKey(searchKey);
+        STORAGE.add(resume);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        storage.remove(new Resume(searchKey));
+        Resume resume = (Resume) getSearchKey(searchKey);
+        STORAGE.remove(resume);
     }
 
     @Override
     protected void doClear() {
-        storage.clear();
+        STORAGE.clear();
     }
 
     @Override
     protected Resume[] getAllResumes() {
-        Resume[] resumes = new Resume[storage.size()];
-        return storage.toArray(resumes);
+        Resume[] resumes = new Resume[STORAGE.size()];
+        return STORAGE.toArray(resumes);
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return storage.get(getSearchKey(searchKey));
+        int sk = (int) getSearchKey(searchKey);
+        return STORAGE.get(sk);
     }
 
     @Override
-    protected int getSearchKey(Object searchKey) {
-        return storage.indexOf(new Resume(searchKey));
+    protected Object getSearchKey(Object searchKey) {
+        for (int i = 0; i < STORAGE.size(); i++) {
+            if (STORAGE.get(i) != null) {
+                if (STORAGE.get(i).equals(searchKey)) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 }
