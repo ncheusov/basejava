@@ -13,7 +13,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void insertResume(Resume resume) {
+    protected void insertResume(Resume resume, Object searchKey) {
         int insertIndex = Math.abs(Arrays.binarySearch(storage, 0, size, resume) + 1);
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
         storage[insertIndex] = resume;
