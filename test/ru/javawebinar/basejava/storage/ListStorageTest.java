@@ -31,21 +31,21 @@ public class ListStorageTest {
     }
 
     @Test
-    public void updateResume() {
+    public void update() {
         storage.update(RESUME_1);
         storage.update(RESUME_2);
         storage.update(RESUME_3);
     }
 
     @Test
-    public void saveResume() {
+    public void save() {
         storage.save(RESUME_4);
         assertGet(RESUME_4);
         assertSize(EXPECTED_LEN + 1);
     }
 
     @Test
-    public void deleteResume() {
+    public void delete() {
         String[] uuids = new String[] {UUID_1, UUID_2, UUID_3};
         int i = 1;
         for (String uuid : uuids) {
@@ -56,7 +56,7 @@ public class ListStorageTest {
     }
 
     @Test
-    public void clearStorage() {
+    public void clear() {
         storage.clear();
         final Resume[] expected = new Resume[0];
         final Resume[] actual = new Resume[storage.size()];
@@ -65,14 +65,14 @@ public class ListStorageTest {
     }
 
     @Test
-    public void getAllResumes() {
+    public void getAll() {
         final Resume[] expected = new Resume[] {RESUME_1, RESUME_2, RESUME_3};
         final Resume[] actual = storage.getAll();
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void getElement() {
+    public void get() {
         assertGet(RESUME_1);
         assertGet(RESUME_2);
         assertGet(RESUME_3);

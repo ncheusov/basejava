@@ -11,9 +11,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         return Arrays.binarySearch(storage, 0, size, new Resume(uuid));
     }
 
-//    TODO: fix searchKey
     @Override
-    protected void insertResume(Resume resume, Object searchKey) {
+    protected void insertResume(Resume resume, int searchKey) {
         int insertIndex = Math.abs(Arrays.binarySearch(storage, 0, size, resume) + 1);
         System.arraycopy(storage, insertIndex, storage, insertIndex + 1, size - insertIndex);
         storage[insertIndex] = resume;
