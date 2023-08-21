@@ -7,11 +7,11 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected Object getSearchKey(Object searchKey) {
-        Resume resume = (Resume) searchKey;
-        return Arrays.binarySearch(storage, 0, size, resume);
+    protected Object getSearchKey(String uuid) {
+        return Arrays.binarySearch(storage, 0, size, new Resume(uuid));
     }
 
+//    TODO: fix searchKey
     @Override
     protected void insertResume(Resume resume, Object searchKey) {
         int insertIndex = Math.abs(Arrays.binarySearch(storage, 0, size, resume) + 1);

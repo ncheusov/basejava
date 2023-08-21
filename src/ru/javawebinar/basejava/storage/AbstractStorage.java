@@ -42,7 +42,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract boolean isExist(Object searchKey);
 
-    protected abstract Object getSearchKey(Object searchKey);
+    protected abstract Object getSearchKey(String uuid);
 
     protected abstract void doUpdate(Object searchKey, Resume resume);
 

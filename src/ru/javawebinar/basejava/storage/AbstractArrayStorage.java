@@ -22,7 +22,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected final void doUpdate(Object searchKey, Resume resume) {
-        storage[(int) getSearchKey(resume.getUuid())] = resume;
+        storage[(int) searchKey] = resume;
     }
 
     @Override
@@ -63,11 +63,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return (int) searchKey > 0;
+        return (int) searchKey >= 0;
     }
 
     @Override
-    protected abstract Object getSearchKey(Object searchKey);
+    protected abstract Object getSearchKey(String uuid);
 
     protected abstract void insertResume(Resume resume, Object searchKey);
 

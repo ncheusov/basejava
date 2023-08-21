@@ -9,10 +9,10 @@ import ru.javawebinar.basejava.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected Object getSearchKey(Object searchKey) {
+    protected Object getSearchKey(String uuid) {
         for (int i = 0; i <= size; i++) {
             if (storage[i] != null) {
-                if (searchKey.equals(storage[i].getUuid())) {
+                if (uuid.equals(storage[i].getUuid())) {
                     return i;
                 }
             }
