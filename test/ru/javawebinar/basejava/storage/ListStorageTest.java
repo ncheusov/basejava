@@ -20,26 +20,26 @@ public class ListStorageTest {
     private static final Resume RESUME_3 = new Resume(UUID_3);
     private static final Resume RESUME_4 = new Resume(UUID_4);
     private static final int EXPECTED_LEN = 3;
-    private final Storage storage = new ListStorage();
+    private static final Storage STORAGE = new ListStorage();
 
     @Before
     public void setUp() {
-        storage.clear();
-        storage.save(RESUME_1);
-        storage.save(RESUME_2);
-        storage.save(RESUME_3);
+        STORAGE.clear();
+        STORAGE.save(RESUME_1);
+        STORAGE.save(RESUME_2);
+        STORAGE.save(RESUME_3);
     }
 
     @Test
     public void update() {
-        storage.update(RESUME_1);
-        storage.update(RESUME_2);
-        storage.update(RESUME_3);
+        STORAGE.update(RESUME_1);
+        STORAGE.update(RESUME_2);
+        STORAGE.update(RESUME_3);
     }
 
     @Test
     public void save() {
-        storage.save(RESUME_4);
+        STORAGE.save(RESUME_4);
         assertGet(RESUME_4);
         assertSize(EXPECTED_LEN + 1);
     }
@@ -49,7 +49,7 @@ public class ListStorageTest {
         String[] uuids = new String[] {UUID_1, UUID_2, UUID_3};
         int i = 1;
         for (String uuid : uuids) {
-            storage.delete(uuid);
+            STORAGE.delete(uuid);
             assertSize(EXPECTED_LEN - i);
             i++;
         }
@@ -57,9 +57,9 @@ public class ListStorageTest {
 
     @Test
     public void clear() {
-        storage.clear();
+        STORAGE.clear();
         final Resume[] expected = new Resume[0];
-        final Resume[] actual = new Resume[storage.size()];
+        final Resume[] actual = new Resume[STORAGE.size()];
         assertArrayEquals(expected, actual);
         assertSize(0);
     }
@@ -67,7 +67,7 @@ public class ListStorageTest {
     @Test
     public void getAll() {
         final Resume[] expected = new Resume[] {RESUME_1, RESUME_2, RESUME_3};
-        final Resume[] actual = storage.getAll();
+        final Resume[] actual = STORAGE.getAll();
         assertArrayEquals(expected, actual);
     }
 
@@ -80,32 +80,32 @@ public class ListStorageTest {
 
     @Test (expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume(NOT_EXIST_RESUME));
+        STORAGE.update(new Resume(NOT_EXIST_RESUME));
     }
 
     @Test (expected = NotExistStorageException.class)
     public void getNotExist() {
-        storage.get(NOT_EXIST_RESUME);
+        STORAGE.get(NOT_EXIST_RESUME);
     }
 
     @Test (expected = NotExistStorageException.class)
     public void deleteNotExist() {
-        storage.delete(NOT_EXIST_RESUME);
+        STORAGE.delete(NOT_EXIST_RESUME);
     }
 
     @Test (expected = ExistStorageException.class)
     public void saveExist() {
         final Resume[] resumes = new Resume[] {RESUME_1, RESUME_2, RESUME_3};
         for (Resume resume : resumes) {
-            storage.save(resume);
+            STORAGE.save(resume);
         }
     }
 
     private void assertSize(int size) {
-        assertEquals(size, storage.size());
+        assertEquals(size, STORAGE.size());
     }
 
     private void assertGet(Resume resume) {
-        assertEquals(resume, storage.get(resume.getUuid()));
+        assertEquals(resume, STORAGE.get(resume.getUuid()));
     }
 }
