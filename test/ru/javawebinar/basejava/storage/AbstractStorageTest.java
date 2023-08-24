@@ -21,7 +21,7 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_3 = new Resume(UUID_3);
     private static final Resume RESUME_4 = new Resume(UUID_4);
     private static final Resume[] EMPTY_ARR = new Resume[0];
-    private static final int EXPECTED_LEN = 3;
+    protected static final int EXPECTED_LEN = 3;
     protected final Storage storage;
 
     protected AbstractStorageTest(Storage storage) {
@@ -34,11 +34,6 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_1);
         storage.save(RESUME_2);
         storage.save(RESUME_3);
-    }
-
-    @Test
-    public void size() {
-        assertSize(EXPECTED_LEN);
     }
 
     @Test
@@ -112,7 +107,7 @@ public abstract class AbstractStorageTest {
         }
     }
 
-    private void assertSize(int size) {
+    protected void assertSize(int size) {
         assertEquals(size, storage.size());
     }
 

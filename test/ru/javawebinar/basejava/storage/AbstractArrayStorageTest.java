@@ -12,6 +12,11 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
         super(storage);
     }
 
+    @Test
+    public void size() {
+        assertSize(EXPECTED_LEN);
+    }
+
     @Test(expected = StorageException.class)
     public void saveOverflow() {
         storage.clear();
