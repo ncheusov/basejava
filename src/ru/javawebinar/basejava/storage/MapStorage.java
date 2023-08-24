@@ -4,7 +4,6 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class MapStorage extends AbstractStorage {
 
@@ -17,7 +16,7 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Object searchKey, Resume resume) {
-        STORAGE.replace(resume.getUuid(), resume);
+        STORAGE.put(resume.getUuid(), resume);
     }
 
     @Override
@@ -47,14 +46,15 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return searchKey != null;
+        return STORAGE.containsKey((String) searchKey);
     }
 
     @Override
     protected Object getSearchKey(String uuid) {
-        for (String key : STORAGE.keySet()) {
-            if (Objects.equals(key, uuid)) {
-                return key;
+        for (Map.Entry<String, Resume> entry : STORAGE.entrySet()) {
+            String entryKey = entry.getKey();
+            if (entryKey.equals(uuid)) {
+                return uuid;
             }
         }
         return null;
