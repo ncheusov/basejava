@@ -51,9 +51,8 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        for (Map.Entry<String, Resume> entry : STORAGE.entrySet()) {
-            String entryKey = entry.getKey();
-            if (entryKey.equals(uuid)) {
+        for (String key : STORAGE.keySet()) {
+            if (key.equals(uuid)) {
                 return uuid;
             }
         }
