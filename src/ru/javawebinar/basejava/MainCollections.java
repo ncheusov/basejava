@@ -9,6 +9,9 @@ public class MainCollections {
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
+    private static final String FULL_NAME1 = "Samuel Joseph Fogarino";
+    private static final String FULL_NAME2 = "Paul Julian Banks";
+    private static final String FULL_NAME3 = "Daniel Alexander Kessler";
     private static final Resume RESUME_1 = new Resume(UUID_1);
     private static final Resume RESUME_2 = new Resume(UUID_2);
     private static final Resume RESUME_3 = new Resume(UUID_3);
@@ -33,8 +36,14 @@ public class MainCollections {
         map.put(UUID_1, RESUME_1);
         map.put(UUID_2, RESUME_2);
         map.put(UUID_3, RESUME_3);
+
+//      Bad!
         for (String uuid : map.keySet()) {
             System.out.println(map.get(uuid));
+        }
+
+        for (Map.Entry<String, Resume> entry : map.entrySet()) {
+            System.out.println(entry.getValue());
         }
     }
 }

@@ -2,10 +2,9 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
-public class MapStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage {
 
     private static final Map<String, Resume> STORAGE = new LinkedHashMap<>();
 
@@ -35,8 +34,13 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume[] getAllResumes() {
-        return STORAGE.values().toArray(new Resume[0]);
+    protected List<Resume> getAllResumes(Comparator<Resume> resumeComparator) {
+        List<Resume> resumeList = new ArrayList<>();
+        for (Map.Entry<String, Resume> entry : STORAGE.entrySet()) {
+            resumeList.add(entry.getValue());
+        }
+        resumeList.sort(resumeComparator);
+        return resumeList;
     }
 
     @Override

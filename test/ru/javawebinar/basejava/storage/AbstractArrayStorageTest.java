@@ -1,10 +1,9 @@
 package ru.javawebinar.basejava.storage;
 
+import org.junit.Assert;
 import org.junit.Test;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
-
-import static org.junit.Assert.fail;
 
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
 
@@ -24,7 +23,7 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
             try {
                 storage.save(new Resume());
             } catch (StorageException ex) {
-                fail("ERROR: overflow ahead of time");
+                Assert.fail("ERROR: overflow ahead of time");
             }
         }
         storage.save(new Resume());

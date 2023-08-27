@@ -6,7 +6,8 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
 
@@ -14,7 +15,12 @@ public abstract class AbstractStorageTest {
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
+    private static final String FULL_NAME1 = "Samuel Joseph Fogarino";
+    private static final String FULL_NAME2 = "Paul Julian Banks";
+    private static final String FULL_NAME3 = "Daniel Alexander Kessler";
+    private static final String FULL_NAME4 = "Jonathan Thomas Smith";
     private static final String NOT_EXIST_RESUME = "dummy";
+    private static final String NOT_EXIST_NAME = "Nancy Sandra Sinatra";
     private static final Resume RESUME_1 = new Resume(UUID_1);
     private static final Resume RESUME_2 = new Resume(UUID_2);
     private static final Resume RESUME_3 = new Resume(UUID_3);
@@ -58,13 +64,13 @@ public abstract class AbstractStorageTest {
             assertSize(uuidsArr.length - i);
             i++;
         }
-        assertArrayEquals(EMPTY_ARR, storage.getAll());
+        assertArrayEquals(EMPTY_ARR, storage.getAllSorted().toArray(new Resume[0]));
     }
 
     @Test
     public void clear() {
         storage.clear();
-        final Resume[] actual = storage.getAll();
+        final Resume[] actual = storage.getAllSorted().toArray(new Resume[0]);
         assertArrayEquals(EMPTY_ARR, actual);
         assertSize(0);
     }
@@ -72,7 +78,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAll() {
         final Resume[] expected = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
-        final Resume[] actual = storage.getAll();
+        final Resume[] actual = storage.getAllSorted().toArray(new Resume[0]);
         assertArrayEquals(expected, actual);
     }
 
