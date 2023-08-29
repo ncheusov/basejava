@@ -5,6 +5,7 @@ import java.util.UUID;
 /**
  * Initial resume class
  */
+
 public class Resume {
 
     // Unique identifier
@@ -49,25 +50,4 @@ public class Resume {
     public String toString() {
         return uuid;
     }
-//
-//     interface RandomName {
-//
-//        String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-//        Random rand = new Random();
-//        Set<String> names = new HashSet<>();
-//
-//        default String randomIdentifier() {
-//            StringBuilder builder = new StringBuilder();
-//            while(builder.toString().isEmpty()) {
-//                int length = rand.nextInt(5) + 5;
-//                for(int i = 0; i < length; i++) {
-//                    builder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
-//                }
-//                if(names.contains(builder.toString())) {
-//                    builder = new StringBuilder();
-//                }
-//            }
-//            return builder.toString();
-//        }
-//    }
 }

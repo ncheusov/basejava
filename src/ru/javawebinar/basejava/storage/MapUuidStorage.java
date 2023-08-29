@@ -6,7 +6,7 @@ import java.util.*;
 
 public class MapUuidStorage extends AbstractStorage {
 
-    private static final Map<String, Resume> STORAGE = new LinkedHashMap<>();
+    private static final Map<String, Resume> STORAGE = new HashMap<>();
 
     @Override
     protected int getSize() {

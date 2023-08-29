@@ -64,7 +64,8 @@ public abstract class AbstractStorageTest {
             assertSize(uuidsArr.length - i);
             i++;
         }
-        assertArrayEquals(EMPTY_ARR, storage.getAllSorted().toArray(new Resume[0]));
+        Resume[] actual = storage.getAllSorted().toArray(new Resume[0]);
+        assertArrayEquals(EMPTY_ARR, actual);
     }
 
     @Test
@@ -76,7 +77,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
+    public void getAllSorted() {
         final Resume[] expected = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
         final Resume[] actual = storage.getAllSorted().toArray(new Resume[0]);
         assertArrayEquals(expected, actual);
