@@ -40,7 +40,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected List<Resume> getAllResumes(Comparator<Resume> resumeComparator) {
+    protected List<Resume> doGetAllSorted(Comparator<Resume> resumeComparator) {
         STORAGE.sort(resumeComparator);
         return STORAGE;
     }
@@ -56,10 +56,10 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected Object getSearchKey(String key) {
         for (int i = 0; i < STORAGE.size(); i++) {
             if (STORAGE.get(i) != null) {
-                if (STORAGE.get(i).getUuid().equals(uuid)) {
+                if (STORAGE.get(i).getUuid().equals(key)) {
                     return i;
                 }
             }

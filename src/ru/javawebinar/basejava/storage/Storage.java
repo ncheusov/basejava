@@ -12,11 +12,11 @@ public interface Storage {
 
     void save(Resume resume);
 
-    void delete(String uuid);
+    void delete(Resume resume);
 
     void clear();
 
     List<Resume> getAllSorted();
 
-    Resume get(String uuid);
+    Resume get(Resume resume);
 }

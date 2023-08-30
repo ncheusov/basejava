@@ -4,6 +4,10 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.*;
 
+/**
+ * Map based storage for uniq identifier
+ */
+
 public class MapUuidStorage extends AbstractStorage {
 
     private static final Map<String, Resume> STORAGE = new HashMap<>();
@@ -34,7 +38,7 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected List<Resume> getAllResumes(Comparator<Resume> resumeComparator) {
+    protected List<Resume> doGetAllSorted(Comparator<Resume> resumeComparator) {
         List<Resume> resumeList = new ArrayList<>();
         for (Map.Entry<String, Resume> entry : STORAGE.entrySet()) {
             resumeList.add(entry.getValue());
@@ -54,10 +58,10 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
-        for (String key : STORAGE.keySet()) {
-            if (key.equals(uuid)) {
-                return uuid;
+    protected Object getSearchKey(String key) {
+        for (String k : STORAGE.keySet()) {
+            if (key.equals(k)) {
+                return key;
             }
         }
         return null;

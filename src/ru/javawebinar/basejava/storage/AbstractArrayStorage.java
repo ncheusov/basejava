@@ -54,7 +54,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
      */
 
     @Override
-    protected List<Resume> getAllResumes(Comparator<Resume> resumeComparator) {
+    protected List<Resume> doGetAllSorted(Comparator<Resume> resumeComparator) {
         Arrays.sort(storage, 0 , size, resumeComparator);
         return Arrays.asList(storage).subList(0, size);
     }
@@ -70,7 +70,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract Object getSearchKey(String key);
 
     protected abstract void insertResume(Resume resume, int searchKey);
 
