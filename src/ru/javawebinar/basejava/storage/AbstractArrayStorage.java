@@ -70,7 +70,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected abstract Object getSearchKey(String key);
+    protected abstract Object getSearchKey(String uuid);
 
     protected abstract void insertResume(Resume resume, int searchKey);
 

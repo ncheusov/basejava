@@ -16,11 +16,12 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
     private static final String NOT_EXIST_UUID = "dummy";
-    private static final Resume RESUME_1 = new Resume(UUID_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3);
-    private static final Resume RESUME_4 = new Resume(UUID_4);
-    private static final Resume NOT_EXIST_RESUME = new Resume(NOT_EXIST_UUID);
+    private static final String EMPTY_NAME = "";
+    private static final Resume RESUME_1 = new Resume(UUID_1, EMPTY_NAME);
+    private static final Resume RESUME_2 = new Resume(UUID_2, EMPTY_NAME);
+    private static final Resume RESUME_3 = new Resume(UUID_3, EMPTY_NAME);
+    private static final Resume RESUME_4 = new Resume(UUID_4, EMPTY_NAME);
+    private static final Resume NOT_EXIST_RESUME = new Resume(NOT_EXIST_UUID, EMPTY_NAME);
     private static final Resume[] EMPTY_ARR = new Resume[0];
     protected static final int EXPECTED_LEN = 3;
     protected final Storage storage;
@@ -88,7 +89,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume(NOT_EXIST_UUID));
+        storage.update(new Resume(NOT_EXIST_UUID, EMPTY_NAME));
     }
 
     @Test(expected = NotExistStorageException.class)

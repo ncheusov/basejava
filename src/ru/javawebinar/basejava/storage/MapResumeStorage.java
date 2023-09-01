@@ -4,9 +4,9 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.*;
 
-public class MapFullNameStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
 
-    private static final Map<String, Resume> STORAGE = new HashMap<>();
+    private static final Map<Resume, Resume> STORAGE = new HashMap<>();
 
     @Override
     protected int getSize() {
@@ -15,17 +15,17 @@ public class MapFullNameStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Object searchKey, Resume resume) {
-        STORAGE.put(resume.getFullName(), resume);
+        STORAGE.put(resume, resume);
     }
 
     @Override
     protected void doSave(Object searchKey, Resume resume) {
-        STORAGE.put(resume.getFullName(), resume);
+        STORAGE.put(resume, resume);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        STORAGE.remove((String) searchKey);
+        STORAGE.remove((Resume) searchKey);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class MapFullNameStorage extends AbstractStorage {
     @Override
     protected List<Resume> doGetAllSorted(Comparator<Resume> resumeComparator) {
         List<Resume> resumeList = new ArrayList<>(STORAGE.size());
-        for (Map.Entry<String, Resume> entry : STORAGE.entrySet()) {
+        for (Map.Entry<Resume, Resume> entry : STORAGE.entrySet()) {
             resumeList.add(entry.getValue());
         }
         resumeList.sort(resumeComparator);
@@ -45,21 +45,16 @@ public class MapFullNameStorage extends AbstractStorage {
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return STORAGE.get((String) searchKey);
+        return STORAGE.get((Resume) searchKey);
     }
 
     @Override
-    protected Object getSearchKey(String fullName) {
-        for (String key : STORAGE.keySet()) {
-            if (key.equals(fullName)) {
-                return fullName;
-            }
-        }
-        return null;
+    protected Resume getSearchKey(String uuid) {
+        return STORAGE.get(new Resume(uuid, ""));
     }
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return STORAGE.containsKey((String) searchKey);
+        return STORAGE.containsKey((Resume) searchKey);
     }
 }

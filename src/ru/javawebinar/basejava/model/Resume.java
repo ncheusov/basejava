@@ -17,9 +17,9 @@ public class Resume {
         this(UUID.randomUUID().toString(), "");
     }
 
-    public Resume(String uuid) {
-        this(uuid, "Daniel Alexander Kessler");
-    }
+//    public Resume(String uuid) {
+//        this(uuid, "Daniel Alexander Kessler" + (counter++));
+//    }
 
     public Resume(String uuid, String fullName) {
         this.uuid = uuid;
@@ -51,6 +51,6 @@ public class Resume {
 
     @Override
     public String toString() {
-        return uuid;
+        return uuid + " " + fullName;
     }
 }
