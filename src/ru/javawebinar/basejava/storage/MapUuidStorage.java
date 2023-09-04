@@ -39,11 +39,7 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected List<Resume> doGetAll() {
-        List<Resume> resumeList = new ArrayList<>();
-        for (Map.Entry<String, Resume> entry : STORAGE.entrySet()) {
-            resumeList.add(entry.getValue());
-        }
-        return resumeList;
+        return new ArrayList<>(STORAGE.values());
     }
 
     @Override

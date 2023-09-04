@@ -6,7 +6,7 @@ import java.util.*;
 
 public class MapResumeStorage extends AbstractStorage {
 
-    private static final Map<Resume, Resume> STORAGE = new HashMap<>();
+    private static final Map<String, Resume> STORAGE = new HashMap<>();
 
     @Override
     protected int getSize() {
@@ -15,17 +15,17 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected void doUpdate(Object searchKey, Resume resume) {
-        STORAGE.put(resume, resume);
+        STORAGE.put(resume.getUuid(), resume);
     }
 
     @Override
     protected void doSave(Object searchKey, Resume resume) {
-        STORAGE.put(resume, resume);
+        STORAGE.put(resume.getUuid(), resume);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        STORAGE.remove((Resume) searchKey);
+        STORAGE.remove(((Resume) searchKey).getUuid());
     }
 
     @Override
@@ -35,16 +35,12 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected List<Resume> doGetAll() {
-        List<Resume> resumeList = new ArrayList<>(STORAGE.size());
-        for (Map.Entry<Resume, Resume> entry : STORAGE.entrySet()) {
-            resumeList.add(entry.getValue());
-        }
-        return resumeList;
+        return new ArrayList<>(STORAGE.values());
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return STORAGE.get((Resume) searchKey);
+        return STORAGE.get(((Resume) searchKey).getUuid());
     }
 
     @Override
@@ -54,6 +50,6 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected Resume getSearchKey(String uuid) {
-        return STORAGE.get(new Resume(uuid, ""));
+        return STORAGE.get(uuid);
     }
 }
