@@ -38,12 +38,11 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected List<Resume> doGetAllSorted(Comparator<Resume> resumeComparator) {
+    protected List<Resume> doGetAll() {
         List<Resume> resumeList = new ArrayList<>();
         for (Map.Entry<String, Resume> entry : STORAGE.entrySet()) {
             resumeList.add(entry.getValue());
         }
-        resumeList.sort(resumeComparator);
         return resumeList;
     }
 
