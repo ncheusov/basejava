@@ -22,8 +22,7 @@ public abstract class AbstractStorageTest {
     private static final String NOT_EXIST_UUID = "dummy";
 
 /**
- *  Names like Paul, John, Alex etc. doesn't sort in {@link #getAllSorted}
- *  sorting by "name + any number" (by example Ivan22)
+ *  Names like Paul, John, Alex etc. doesn't sort in {@link #getAllSorted()} with {@link List}, use only {@link Arrays}
  */
     private static final String NAME_1 = "Name1";
     private static final String NAME_2 = "Name2";
