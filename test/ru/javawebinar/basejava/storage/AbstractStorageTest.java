@@ -6,28 +6,36 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import static org.junit.Assert.assertArrayEquals;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractStorageTest {
 
+    protected final Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
     private static final String NOT_EXIST_UUID = "dummy";
-    private static final String NAME_1 = "Paul Banks";
-    private static final String NAME_2 = "Samuel Fogarino";
-    private static final String NAME_3 = "Daniel Kessler";
-    private static final String NAME_4 = "Carlos Dengler";
+
+/**
+ *  Names like Paul, John, Alex etc. doesn't sort in {@link #getAllSorted}
+ *  sorting by "name + any number" (by example Ivan22)
+ */
+    private static final String NAME_1 = "Name1";
+    private static final String NAME_2 = "Name2";
+    private static final String NAME_3 = "Name3";
+    private static final String NAME_4 = "Name4";
     private static final String EMPTY_NAME = "";
     private static final Resume RESUME_1 = new Resume(UUID_1, NAME_1);
     private static final Resume RESUME_2 = new Resume(UUID_2, NAME_2);
     private static final Resume RESUME_3 = new Resume(UUID_3, NAME_3);
     private static final Resume RESUME_4 = new Resume(UUID_4, NAME_4);
-    private static final Resume[] EMPTY_ARR = new Resume[0];
+    private static final List<Object> EMPTY_LIST = Collections.emptyList();
     protected static final int EXPECTED_LEN = 3;
-    protected final Storage storage;
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -64,23 +72,22 @@ public abstract class AbstractStorageTest {
             assertSize(EXPECTED_LEN - i);
             i++;
         }
-        Resume[] actual = storage.getAllSorted().toArray(new Resume[0]);
-        assertArrayEquals(EMPTY_ARR, actual);
+        List<Resume> actual = storage.getAllSorted();
+        assertEquals(EMPTY_LIST, actual);
     }
 
     @Test
     public void clear() {
         storage.clear();
-        final Resume[] actual = storage.getAllSorted().toArray(new Resume[0]);
-        assertArrayEquals(EMPTY_ARR, actual);
+        final List<Resume> actual = storage.getAllSorted();
+        assertEquals(EMPTY_LIST, actual);
         assertSize(0);
     }
 
     @Test
     public void getAllSorted() {
-        final Resume[] expected = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
-        final Resume[] actual = storage.getAllSorted().toArray(new Resume[0]);
-        assertArrayEquals(expected, actual);
+        final List<Resume> actual = storage.getAllSorted();
+        assertEquals(Arrays.asList(RESUME_1, RESUME_2, RESUME_3), actual);
     }
 
     @Test
