@@ -10,7 +10,7 @@ import java.util.List;
  * Array based storage for Resumes
  */
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected static final int STORAGE_LIMIT = 10000;
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -22,23 +22,23 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected final void doUpdate(Object searchKey, Resume resume) {
-        storage[(int) searchKey] = resume;
+    protected final void doUpdate(Integer searchKey, Resume resume) {
+        storage[searchKey] = resume;
     }
 
     @Override
-    protected final void doSave(Object searchKey, Resume resume) {
+    protected final void doSave(Integer searchKey, Resume resume) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("ERROR: storage overflowed", resume.getUuid());
         } else {
-            insertResume(resume, (int) searchKey);
+            insertResume(resume, searchKey);
             size++;
         }
     }
 
     @Override
-    protected final void doDelete(Object searchKey) {
-        removeResume((int) searchKey);
+    protected final void doDelete(Integer searchKey) {
+        removeResume(searchKey);
         size--;
     }
 
@@ -58,17 +58,17 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected final Resume doGet(Object searchKey) {
-        return storage[(int) searchKey];
+    protected final Resume doGet(Integer searchKey) {
+        return storage[searchKey];
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return (int) searchKey >= 0;
+    protected boolean isExist(Integer searchKey) {
+        return searchKey >= 0;
     }
 
     @Override
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract Integer getSearchKey(String uuid);
 
     protected abstract void insertResume(Resume resume, int searchKey);
 

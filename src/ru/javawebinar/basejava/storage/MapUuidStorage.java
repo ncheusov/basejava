@@ -8,7 +8,7 @@ import java.util.*;
  * Map based storage for uniq identifier
  */
 
-public class MapUuidStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage<String> {
 
     private static final Map<String, Resume> STORAGE = new HashMap<>();
 
@@ -18,18 +18,18 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doUpdate(Object searchKey, Resume resume) {
+    protected void doUpdate(String searchKey, Resume resume) {
         STORAGE.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void doSave(Object searchKey, Resume resume) {
+    protected void doSave(String searchKey, Resume resume) {
         STORAGE.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void doDelete(Object searchKey) {
-        STORAGE.remove((String) searchKey);
+    protected void doDelete(String searchKey) {
+        STORAGE.remove(searchKey);
     }
 
     @Override
@@ -43,13 +43,13 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume doGet(Object searchKey) {
-        return STORAGE.get((String) searchKey);
+    protected Resume doGet(String searchKey) {
+        return STORAGE.get(searchKey);
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
-        return STORAGE.containsKey((String) searchKey);
+    protected boolean isExist(String searchKey) {
+        return STORAGE.containsKey(searchKey);
     }
 
     @Override
