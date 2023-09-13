@@ -1,7 +1,6 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Initial resume class
@@ -28,6 +27,21 @@ public class Resume {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public class Contacts {
+
+        private final Map<String, String> contacts = new HashMap<>();
+
+        public Contacts(String phoneNumber, String mail, String skype) {
+            contacts.put("Phone", Resume.this.phoneNumber = phoneNumber);
+            contacts.put("Mail", Resume.this.mail = mail);
+            contacts.put("Skype", Resume.this.skype = skype);
+        }
+
+        public String get(String contact) {
+            return contacts.get(contact);
+        }
     }
 
     @Override
