@@ -11,6 +11,7 @@ public class Resume {
     // Unique identifier
     private final String uuid;
     private final String fullName;
+    private final Map<String, String> contacts;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -19,6 +20,7 @@ public class Resume {
     public Resume(String uuid, String fullName) {
         this.uuid = uuid;
         this.fullName = fullName;
+        contacts = new HashMap<>();
     }
 
     public String getUuid() {
@@ -27,21 +29,6 @@ public class Resume {
 
     public String getFullName() {
         return fullName;
-    }
-
-    public class Contacts {
-
-        private final Map<String, String> contacts = new HashMap<>();
-
-        public Contacts(String phoneNumber, String mail, String skype) {
-            contacts.put("Phone", Resume.this.phoneNumber = phoneNumber);
-            contacts.put("Mail", Resume.this.mail = mail);
-            contacts.put("Skype", Resume.this.skype = skype);
-        }
-
-        public String get(String contact) {
-            return contacts.get(contact);
-        }
     }
 
     @Override
@@ -61,4 +48,26 @@ public class Resume {
     public String toString() {
         return uuid + '(' + fullName + ')';
     }
+
+    public class Contacts {
+
+        public void add(String key, String value) {
+            contacts.put(key, value);
+        }
+
+        public String get(String key) {
+            return contacts.get(key);
+        }
+
+        public void update(String key, String value) {
+            contacts.replace(key, value);
+        }
+
+        @Override
+        public String toString() {
+            return contacts.entrySet().toString();
+        }
+    }
+
+
 }
