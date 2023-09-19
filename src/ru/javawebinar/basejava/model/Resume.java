@@ -12,6 +12,7 @@ public class Resume {
     private final String uuid;
     private final String fullName;
     private final Map<String, String> contacts;
+    private final Map<SectionType, String> sections;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -21,6 +22,7 @@ public class Resume {
         this.uuid = uuid;
         this.fullName = fullName;
         contacts = new HashMap<>();
+        sections = new HashMap<>();
     }
 
     public String getUuid() {
@@ -51,6 +53,11 @@ public class Resume {
 
     public class Contacts {
 
+        public Contacts(String phoneNumber, String email) {
+            contacts.put("Тел:", phoneNumber);
+            contacts.put("Почта:", email);
+        }
+
         public void add(String key, String value) {
             contacts.put(key, value);
         }
@@ -69,5 +76,46 @@ public class Resume {
         }
     }
 
+    public class TextSection {
 
+        public TextSection(String objective, String personal) {
+            sections.put(SectionType.OBJECTIVE, objective);
+            sections.put(SectionType.PERSONAL, personal);
+        }
+
+        public void addObjective(String description) {
+            sections.put(SectionType.OBJECTIVE, description);
+        }
+
+        public void addPersonal(String description) {
+            sections.put(SectionType.PERSONAL, description);
+        }
+
+        public String get(SectionType key) {
+            return sections.get(key);
+        }
+    }
+
+    public class AchievementQualificationSection {
+
+        private final List<String> achievements = new ArrayList<>();
+        private final List<String> qualification = new ArrayList<>();
+
+        public void add(String descr) {
+            achievements.add(descr);
+        }
+
+
+    }
+
+    public class ExperienceEducationSection {
+
+        private String position;
+        private String organization;
+        private String date;
+        private String responsibilities;
+        private String grade;
+        private Map<String, String> experience = new LinkedHashMap<>();
+        private Map<String, String> education = new LinkedHashMap<>();
+    }
 }
