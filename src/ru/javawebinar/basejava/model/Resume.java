@@ -11,7 +11,7 @@ public class Resume {
     // Unique identifier
     private final String uuid;
     private final String fullName;
-    private final Map<String, String> contacts;
+    private final Map<ContactType, String> contacts;
     private final Map<SectionType, AbstractSection> sections;
 
     public Resume(String fullName) {
@@ -53,26 +53,16 @@ public class Resume {
 
     public class Contacts {
 
-        public Contacts(String phoneNumber, String email) {
-            contacts.put("Тел:", phoneNumber);
-            contacts.put("Почта:", email);
-        }
-
-        public void add(String key, String value) {
+        public void add(ContactType key, String value) {
             contacts.put(key, value);
         }
 
-        public String get(String key) {
+        public String get(ContactType key) {
             return contacts.get(key);
         }
 
-        public void update(String key, String value) {
+        public void update(ContactType key, String value) {
             contacts.replace(key, value);
-        }
-
-        @Override
-        public String toString() {
-            return contacts.entrySet().toString();
         }
     }
 
@@ -83,26 +73,13 @@ public class Resume {
         public AbstractSection(AbstractSection section) {
             this.section = section;
         }
+
+//        protected abstract add(SectionType sectionType, )
     }
 
-    public class TextSection extends AbstractSection {
-
-        public TextSection() {
-            super(new TextSection());
-        }
-
-        public void addObjective(String description) {
-            sections.put(SectionType.OBJECTIVE, description);
-        }
-
-        public void addPersonal(String description) {
-            sections.put(SectionType.PERSONAL, description);
-        }
-
-        public String get(SectionType key) {
-            return sections.get(key);
-        }
-    }
+//    public class TextSection extends AbstractSection {
+//
+//    }
 
     public class ListSection {
 
@@ -117,12 +94,6 @@ public class Resume {
     }
 
     public class CompanySection {
-
-        private String position;
-        private String organization;
-        private String date;
-        private String responsibilities;
-        private String grade;
         private Map<String, String> experience = new LinkedHashMap<>();
         private Map<String, String> education = new LinkedHashMap<>();
     }
