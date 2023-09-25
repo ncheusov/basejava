@@ -12,7 +12,7 @@ public class Resume {
     private final String uuid;
     private final String fullName;
     private final Map<String, String> contacts;
-    private final Map<SectionType, String> sections;
+    private final Map<SectionType, AbstractSection> sections;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -76,11 +76,19 @@ public class Resume {
         }
     }
 
-    public class TextSection {
+    public abstract class AbstractSection {
 
-        public TextSection(String objective, String personal) {
-            sections.put(SectionType.OBJECTIVE, objective);
-            sections.put(SectionType.PERSONAL, personal);
+        private final AbstractSection section;
+
+        public AbstractSection(AbstractSection section) {
+            this.section = section;
+        }
+    }
+
+    public class TextSection extends AbstractSection {
+
+        public TextSection() {
+            super(new TextSection());
         }
 
         public void addObjective(String description) {
@@ -96,7 +104,7 @@ public class Resume {
         }
     }
 
-    public class AchievementQualificationSection {
+    public class ListSection {
 
         private final List<String> achievements = new ArrayList<>();
         private final List<String> qualification = new ArrayList<>();
@@ -108,7 +116,7 @@ public class Resume {
 
     }
 
-    public class ExperienceEducationSection {
+    public class CompanySection {
 
         private String position;
         private String organization;
